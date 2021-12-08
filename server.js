@@ -38,12 +38,7 @@ app.get('/prefazione', (req, res) => {
     res.json(response);
   });
 });
-// app.get('/prefazione', (req, res) => {
-//   execMongo(async (db) => {
-//     const response = await db.collection('prefazione').find().toArray();
-//     res.json(response);
-//   });
-// });
+
 
 app.get('/indice', (req, res) => {
   execMongo(async (db) => {
