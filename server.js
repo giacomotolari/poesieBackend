@@ -1,9 +1,12 @@
+import './config.js'
 import express from 'express';
 import { MongoClient } from 'mongodb';
 import cors from 'cors';
+
+
 const app = express();
 const port = 9000;
-const mongoConnectString = 'mongodb://localhost:27017';
+const mongoConnectString = process.env.MONGODB_URI;
 const client = new MongoClient(mongoConnectString);
 
 app.use(express.json());
@@ -17,15 +20,57 @@ const execMongo = async (done) => {
 
 app.get('/', (req, res) => {
   execMongo(async (db) => {
-    const users = await db
-      .collection('di_acque')
-      .find()
-    //   .project({
-    //     title: 1,
-    //     text: 1,
-    //   })
-      .toArray();
-    res.json(users);
+    const response = [
+      ...(await db.collection('indice').find().toArray()),
+      ...(await db.collection('prefazione').find().toArray()),
+      ...(await db.collection('di_acque').find().toArray()),
+      ...(await db.collection('di_Terre').find().toArray()),
+      ...(await db.collection('di_amori').find().toArray()),
+      ...(await db.collection('postfazione').find().toArray()),
+    ];
+    res.json(response);
+  });
+});
+
+app.get('/prefazione', (req, res) => {
+  execMongo(async (db) => {
+    const response = await db.collection('prefazione').find().toArray();
+    res.json(response);
+  });
+});
+
+app.get('/indice', (req, res) => {
+  execMongo(async (db) => {
+    const response = await db.collection('indice').find().toArray();
+    res.json(response);
+  });
+});
+
+app.get('/acque', (req, res) => {
+  execMongo(async (db) => {
+    const response = await db.collection('di_acque').find().toArray();
+    res.json(response);
+  });
+});
+
+app.get('/terre', (req, res) => {
+  execMongo(async (db) => {
+    const response = await db.collection('di_Terre').find().toArray();
+    res.json(response);
+  });
+});
+
+app.get('/amori', (req, res) => {
+  execMongo(async (db) => {
+    const response = await db.collection('di_amori').find().toArray();
+    res.json(response);
+  });
+});
+
+app.get('/postfazione', (req, res) => {
+  execMongo(async (db) => {
+    const response = await db.collection('postfazione').find().toArray();
+    res.json(response);
   });
 });
 
