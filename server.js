@@ -5,7 +5,7 @@ import cors from 'cors';
 
 
 const app = express();
-const port = 9000;
+const port = process.env.PORT;
 const mongoConnectString = process.env.MONGODB_URI;
 const client = new MongoClient(mongoConnectString);
 
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
       ...(await db.collection('indice').find().toArray()),
       ...(await db.collection('prefazione').find().toArray()),
       ...(await db.collection('di_acque').find().toArray()),
-      ...(await db.collection('di_Terre').find().toArray()),
+      ...(await db.collection('di_terre').find().toArray()),
       ...(await db.collection('di_amori').find().toArray()),
       ...(await db.collection('postfazione').find().toArray()),
     ];
