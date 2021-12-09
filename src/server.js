@@ -6,7 +6,7 @@ import {poemRouter} from './routers/poemRouter.js'
 
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 7777;
 
 app.use(express.json());
 app.use(cors());
