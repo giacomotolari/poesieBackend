@@ -3,7 +3,9 @@ import mongoose from 'mongoose';
 const acqueSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
-    text: { type: String, required: true },
+    text: { type: String },
+    description: { type: String },
+    likes: { type: Number },
   },
   {
     timestamps: true,
