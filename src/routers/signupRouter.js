@@ -2,7 +2,7 @@ import '../config.js';
 import bcrypt from 'bcrypt';
 import express from 'express';
 import * as userController from '../controllers/userController.js';
-import UserModel from "../models/userModel.js";
+
 
 const saltRounds = Number(process.env.SALT_ROUNDS);
 // const myPlaintextPassword = process.env.MY_PASSWORD;
@@ -15,7 +15,6 @@ signupRouter.get('/', async (_req, res) => {
   res.json(users);
 });
 
-
 // CREATE
 signupRouter.post('/create', async (req, res) => {
   const userObj = req.body;
@@ -25,9 +24,7 @@ signupRouter.post('/create', async (req, res) => {
         bcrypt.hash(userObj.password1, salt, async (err, hash) => {
           const dbUser = {
             userName: userObj.userName,
-            accessGroups: 'loggedInUsers, members',
-            // accessGroups: 'loggedInUsers',
-            // accessGroups: 'loggedOutUsers',
+            accessGroups: 'loggedInUsers',
             hash,
           };
           const savedDBUser = await userController.createUser(dbUser);

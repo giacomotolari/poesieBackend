@@ -17,7 +17,6 @@ loginRouter.post('/', async (req, res) => {
   if (!user) {
     user = await UserModel.findOne({ userName: 'anonymousUser' });
   }
-
   req.session.user = user;
   req.session.save();
   res.json(user);
