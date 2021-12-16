@@ -17,7 +17,8 @@ app.set('trust proxy', 1);
 app.use(
   cors({
     // origin: process.env.NODE_ENV !== "production" ? process.env.FRONTEND_ORIGIN : [process.env.FRONTEND_ORIGIN_HTTP, process.env.FRONTEND_ORIGIN_HTTPS],
-    origin: process.env.FRONTEND_URL,
+    // origin: process.env.FRONTEND_URL,
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
