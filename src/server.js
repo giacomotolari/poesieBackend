@@ -16,11 +16,7 @@ app.use(express.json());
 app.set('trust proxy', 1);
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV !== "production"
-        ? process.env.FRONTEND_URL
-        : [process.env.FRONTEND_URL_HTTP, process.env.FRONTEND_URL_HTTPS],
-    credentials: true,
+    origin: FRONTEND_URL,
     credentials: true,
   })
 );
