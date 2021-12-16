@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import express from 'express';
 import * as userController from '../controllers/userController.js';
 
-
 const saltRounds = Number(process.env.SALT_ROUNDS);
 // const myPlaintextPassword = process.env.MY_PASSWORD;
 
@@ -17,6 +16,7 @@ signupRouter.get('/', async (_req, res) => {
 
 // CREATE
 signupRouter.post('/create', async (req, res) => {
+  const users = await userController.readAllUsers();
   const userObj = req.body;
   userObj.password1 !== userObj.password2
     ? res.status(500).send('error')
@@ -27,10 +27,12 @@ signupRouter.post('/create', async (req, res) => {
             accessGroups: 'loggedInUsers',
             hash,
           };
-          const savedDBUser = await userController.createUser(dbUser);
-          res.json({
-            savedDBUser,
-          });
+          if (users.find((element) => element !== dbUser.userName)) {
+            const savedDBUser = await userController.createUser(dbUser);
+            res.json({
+              savedDBUser,
+            });
+          }
         });
       });
 });
