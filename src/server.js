@@ -9,7 +9,7 @@ import { signupRouter } from './routers/signupRouter.js';
 import { loginRouter } from './routers/loginRouter.js';
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 9000;
 
 app.use(express.json());
 
