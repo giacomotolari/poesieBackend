@@ -5,7 +5,7 @@ const amoriSchema = new mongoose.Schema(
     title: { type: String, required: true },
     text: { type: String },
     description: { type: String },
-    likes: { type: Number },
+    likes: { type: Array},
   },
   {
     timestamps: true,

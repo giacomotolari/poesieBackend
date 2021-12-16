@@ -6,24 +6,23 @@ import UserModel from '../models/userModel.js';
 
 const loginRouter = express.Router();
 
-// const userIsInGroup = (user, accessGroup) => {
-//   const accessGroupArray = user.accessGroups.split(',').map((m) => m.trim());
-//   return accessGroupArray.includes(accessGroup);
-// };
-
 loginRouter.post('/', async (req, res) => {
   const userName = req.body.userName;
+  // console.log(userName,"req.body.userName");
   let user = await UserModel.findOne({ userName: userName });
+  // console.log(user);
   if (!user) {
     user = await UserModel.findOne({ userName: 'anonymousUser' });
   }
   req.session.user = user;
+  // console.log(user);
   req.session.save();
   res.json(user);
 });
 
 loginRouter.get('/currentuser', async (req, res) => {
   let user = req.session.user;
+  // console.log(user);
   if (!user) {
     user = await UserModel.findOne({ userName: 'anonymousUser' });
   }
