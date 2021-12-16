@@ -10,7 +10,7 @@ import mongoose from 'mongoose';
 const MONGO_URI = process.env.MONGO_URI;
 
 console.log({ MONGO_URI });
-
+console.log("");
 mongoose
   .connect(MONGO_URI, {
     useNewUrlParser: true,
