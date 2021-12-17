@@ -20,7 +20,6 @@ app.use(
     credentials: true,
   })
 );
-
 app.use(cookieParser());
 app.use(
   session({
@@ -29,7 +28,7 @@ app.use(
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
-      maxAge: 60 * 60 * 24,
+      maxAge: 1000 * 60 * 60 * 24,
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       secure: process.env.NODE_ENV === 'production',
     },
