@@ -12,16 +12,29 @@ import mongoose from 'mongoose';
 const poemRouter = express.Router();
 
 poemRouter.get('/', async (req, res) => {
-  const response = [
-    ...(await IndiceModel.find({})),
-    ...(await PrefazioneModel.find({})),
-    ...(await AcqueModel.find({})),
-    ...(await TerreModel.find({})),
-    ...(await AmoriModel.find({})),
-    ...(await PostfazioneModel.find({})),
-  ];
+  let response = [];
+  response.push(
+    ...await IndiceModel.find({}),
+    ...await PrefazioneModel.find({}),
+    ...await AcqueModel.find({}),
+    ...await TerreModel.find({}),
+    ...await AmoriModel.find({}),
+    ...await PostfazioneModel.find({})
+  );
   res.json(response);
 });
+
+// poemRouter.get('/', async (req, res) => {
+//   const response = [
+//     ...(await IndiceModel.find({})),
+//     ...(await PrefazioneModel.find({})),
+//     ...(await AcqueModel.find({})),
+//     ...(await TerreModel.find({})),
+//     ...(await AmoriModel.find({})),
+//     ...(await PostfazioneModel.find({})),
+//   ];
+//   res.json(response);
+// });
 
 poemRouter.patch('/addLike/acque/:id', async (req, res) => {
   const id = req.params.id;
