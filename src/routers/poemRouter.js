@@ -14,14 +14,16 @@ const poemRouter = express.Router();
 poemRouter.get('/', async (req, res) => {
   let response = [];
   response.push(
-    ...await IndiceModel.find({}),
-    ...await PrefazioneModel.find({}),
-    ...await AcqueModel.find({}),
-    ...await TerreModel.find({}),
-    ...await AmoriModel.find({}),
-    ...await PostfazioneModel.find({})
+    // ...(await IndiceModel.find({}).sort((a, b) => a._id > b._id)),
+    ...(await IndiceModel.find({}).sort({_id:1})),
+    ...(await PrefazioneModel.find({})),
+    ...(await AcqueModel.find({})),
+    ...(await TerreModel.find({})),
+    ...(await AmoriModel.find({})),
+    ...(await PostfazioneModel.find({}))
   );
   res.json(response);
+  console.log(response);
 });
 
 // poemRouter.get('/', async (req, res) => {
