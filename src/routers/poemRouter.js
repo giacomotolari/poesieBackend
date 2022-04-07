@@ -23,7 +23,6 @@ poemRouter.get('/', async (req, res) => {
     ...(await PostfazioneModel.find({}))
   );
   res.json(response);
-  console.log(response);
 });
 
 // poemRouter.get('/', async (req, res) => {

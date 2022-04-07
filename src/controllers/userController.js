@@ -25,4 +25,3 @@ export const deleteUser = async (id) => {
 };
 
 // LOGIN
-

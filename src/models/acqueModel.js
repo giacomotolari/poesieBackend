@@ -16,3 +16,6 @@ const acqueSchema = new mongoose.Schema(
 const AcqueModel = mongoose.model('AcqueModel', acqueSchema, 'di_acque');
 
 export default AcqueModel;
+
+
+
