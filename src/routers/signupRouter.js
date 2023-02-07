@@ -1,8 +1,8 @@
 import "../config.js";
 import bcrypt from "bcrypt";
 import express from "express";
-import { sendEmail } from "../util/sendEmail.js";
 import * as userController from "../controllers/userController.js";
+import * as sendEmails from "../controllers/sendEmails.js";
 
 const saltRounds = Number(process.env.SALT_ROUNDS);
 // const myPlaintextPassword = process.env.MY_PASSWORD;
@@ -15,41 +15,31 @@ signupRouter.get("/", async (_req, res) => {
   res.json(users);
 });
 
-signupRouter.post("/sendemail", async (req, res) => {
-  try {
-    await sendEmail({
-      to: ["tolarigiacomo@gmail.com"],
-      from: "tolarigiacomo@gmail.com",
-      subject: "te",
-      text: "21",
-    });
-    res.sendStatus(200);
-    console.log("sended");
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-  }
-});
-
 // CREATE
 signupRouter.post("/create", async (req, res) => {
-  const users = await userController.readAllUsers();
   const userObj = req.body;
+  const sendEmailToUser = await sendEmails.sendEmailToUser(
+    "registration by alporto",
+    `${userObj.userName} thank you for the registration your email account is: ${userObj.email} `,
+    userObj.email
+  );
   userObj.password1 !== userObj.password2
     ? res.status(500).send("error")
     : bcrypt.genSalt(saltRounds, async (err, salt) => {
         bcrypt.hash(userObj.password1, salt, async (err, hash) => {
           const dbUser = {
             userName: userObj.userName,
+            email: userObj.email,
             accessGroups: "loggedInUsers",
             hash,
           };
-          if (users.find((element) => element !== dbUser.userName)) {
-            const savedDBUser = await userController.createUser(dbUser);
-            res.json({
-              savedDBUser,
-            });
-          }
+          // if (users.find((element) => element !== dbUser.userName)) {
+          const savedDBUser = await userController.createUser(dbUser);
+          res.json({
+            savedDBUser,
+            sendEmailToUser,
+          });
+          // }
         });
       });
 });
